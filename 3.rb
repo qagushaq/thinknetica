@@ -29,15 +29,3 @@ if arr[-1]**2 == arr[-2]**2 + arr[-3]**2
       puts "Треугольник является обычным)"
     end
 end
-
-
-=begin
-def max x,y
-  if x>=y
-      max=x
-    else
-    max=y
-  end
-end
-puts max(a,max(b,c))
-=end
