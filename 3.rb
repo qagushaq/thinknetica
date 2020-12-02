@@ -15,10 +15,10 @@ c = gets.chomp.to_i
 
 check_tr(a, b, c)
 
-max=[a, b, c].max
-min=[a, b, c].min(2)
-min1=min[0]
-min2=min[1]
+max = [a, b, c].max
+min = [a, b, c].min(2)
+min1 = min[0]
+min2 = min[1]
 
 if max**2 == min1**2 + min2**2
   puts 'Треугольник является прямоугольным'
