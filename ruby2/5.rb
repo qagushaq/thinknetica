@@ -1,6 +1,6 @@
 puts ("Введите дату в формате дд.мм.гггг")
-mm_dd_yyyy = gets().chomp.split(".")
-mm_dd_yyyy.map! {|item| item = item.to_i }
+mm_dd_yyyy = gets.chomp.split(".")
+mm_dd_yyyy.map! { |item| item = item.to_i }
 
 number = mm_dd_yyyy[0]
 month = mm_dd_yyyy[1]
