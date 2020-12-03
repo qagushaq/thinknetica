@@ -1,7 +1,2 @@
-array = []
-10.upto(100) do |i|
-  if i % 5 == 0
-    array << i
-  end
-end
-print array
+arr = (5..100).step(5).to_a
+puts arr

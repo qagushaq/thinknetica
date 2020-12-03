@@ -12,7 +12,5 @@ month {january: 31,
   december: 31}
 
 month.each do |key,value|
-  if value == 30    #puts key if value == 30 по стайл-гайду можно так писать ?
-    puts key
-  end
+  puts key if value == 30
 end
