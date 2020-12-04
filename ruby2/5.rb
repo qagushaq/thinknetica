@@ -18,7 +18,7 @@ def check(days_in_a_month, number, month, year)
   else
     puts 'Год не високосный'
   end
-  sum(days_in_a_month,number, month, year)
+  sum(days_in_a_month, number, month, year)
 end
 
 def data
@@ -32,7 +32,7 @@ def data
   month = mm_dd_yyyy[1]
   year = mm_dd_yyyy[2]
 
-  check(days_in_a_month,number, month, year)
+  check(days_in_a_month, number, month, year)
 end
 
 data
