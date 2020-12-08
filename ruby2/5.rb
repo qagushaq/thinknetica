@@ -1,38 +1,54 @@
-def output(sum)
-  puts "Порядковый номер даты, начиная отсчет с начала года равен: #{sum}"
+def leap_year?(year)
+  (year % 400).zero? || ((year % 4).zero? && year % 100 != 0)
 end
 
-def sum(days_in_a_month, number, month, year)
-  sum = 0
-  for i in 0..month-2
-    sum += days_in_a_month[i]
-  end
-  sum += number
-  output(sum)
+def days_in_february(year)
+  leap_year?(year) ? 29 : 28
 end
 
-def check(days_in_a_month, number, month, year)
-  if year % 400 == 0 || ( year % 4 == 0 && year % 100 != 0)
-    puts 'Год високосный'
-    days_in_a_month[1] = 29
-  else
-    puts 'Год не високосный'
-  end
-  sum(days_in_a_month, number, month, year)
+def months_by_year(year)
+  [31, days_in_february(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 end
 
-def data
-  days_in_a_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-  puts ("Введите дату в формате дд.мм.гггг")
-  mm_dd_yyyy = gets.chomp.split(".")
-  mm_dd_yyyy.map! { |item| item = item.to_i }
-  #добавить проверку на корректность введенной даты
-  #if month > 12 || number > days_in_a_month[month - 1]
-  number = mm_dd_yyyy[0]
-  month = mm_dd_yyyy[1]
-  year = mm_dd_yyyy[2]
-
-  check(days_in_a_month, number, month, year)
+def calc_total(day, month, year)
+  return day if month == 1
+  print "Порядковый номер даты, начиная отсчет с начала года равен: "
+  months_by_year(year).first(month - 1).sum + day
 end
 
-data
+puts ("Введите дату в формате дд.мм.гггг")
+mm_dd_yyyy = gets.chomp.split(".")
+mm_dd_yyyy.map! { |item| item = item.to_i }
+day = mm_dd_yyyy[0]
+month = mm_dd_yyyy[1]
+year = mm_dd_yyyy[2]
+
+while (month > 12 || day > months_by_year(year)[month-1]) == true
+    puts ("Вы ввели некорректную дату. Повторите ввод.")
+    puts ("Введите дату в формате дд.мм.гггг")
+    mm_dd_yyyy = gets.chomp.split(".")
+    mm_dd_yyyy.map! { |item| item = item.to_i }
+    day = mm_dd_yyyy[0]
+    month = mm_dd_yyyy[1]
+    year = mm_dd_yyyy[2]
+    break if (month > 12 || day > months_by_year(year)[month-1]) == false
+end
+
+puts calc_total(day, month, year)
+
+=begin
+def calc_total(day, month, year)
+  return day if month == 1
+  print "Порядковый номер даты, начиная отсчет с начала года равен: "
+  months_by_year(year).first(month - 1).sum + day
+end
+
+get_data
+while (month > 12 || day > months_by_year(year)[month-1]) == true
+    puts ("Вы ввели некорректную дату. Повторите ввод.")
+    get_data
+    break if (month > 12 || day > months_by_year(year)[month-1]) == false
+end
+
+puts calc_total(day, month, year) 
+=end
