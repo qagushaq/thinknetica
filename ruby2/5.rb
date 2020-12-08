@@ -16,39 +16,21 @@ def calc_total(day, month, year)
   months_by_year(year).first(month - 1).sum + day
 end
 
-puts ("Введите дату в формате дд.мм.гггг")
-mm_dd_yyyy = gets.chomp.split(".")
-mm_dd_yyyy.map! { |item| item = item.to_i }
-day = mm_dd_yyyy[0]
-month = mm_dd_yyyy[1]
-year = mm_dd_yyyy[2]
+def get_data
+  puts ("Введите дату в формате дд.мм.гггг")
+  mm_dd_yyyy = gets.chomp.split(".")
+  mm_dd_yyyy.map! { |item| item = item.to_i }
+  day = mm_dd_yyyy[0]
+  month = mm_dd_yyyy[1]
+  year = mm_dd_yyyy[2]
+  return day, month, year
+end
 
+day, month, year = get_data
 while (month > 12 || day > months_by_year(year)[month-1]) == true
-    puts ("Вы ввели некорректную дату. Повторите ввод.")
-    puts ("Введите дату в формате дд.мм.гггг")
-    mm_dd_yyyy = gets.chomp.split(".")
-    mm_dd_yyyy.map! { |item| item = item.to_i }
-    day = mm_dd_yyyy[0]
-    month = mm_dd_yyyy[1]
-    year = mm_dd_yyyy[2]
-    break if (month > 12 || day > months_by_year(year)[month-1]) == false
+  puts ("Вы ввели некорректную дату. Повторите ввод.")
+  day, month, year = get_data
+  break if (month > 12 || day > months_by_year(year)[month-1]) == false
 end
 
 puts calc_total(day, month, year)
-
-=begin
-def calc_total(day, month, year)
-  return day if month == 1
-  print "Порядковый номер даты, начиная отсчет с начала года равен: "
-  months_by_year(year).first(month - 1).sum + day
-end
-
-get_data
-while (month > 12 || day > months_by_year(year)[month-1]) == true
-    puts ("Вы ввели некорректную дату. Повторите ввод.")
-    get_data
-    break if (month > 12 || day > months_by_year(year)[month-1]) == false
-end
-
-puts calc_total(day, month, year) 
-=end
