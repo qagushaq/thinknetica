@@ -14,11 +14,11 @@ class Station   #Класс Station (Станция):
   end
 
   def show_trains(type)  #Может возвращать список всех поездов на станции, находящиеся в текущий момент
-    if type = 1   #Может возвращать список поездов на станции по типу (см. ниже): кол-во грузовых, пассажирских
-      puts "Номера поездов на станции #{name} типа грузовые: "
+    if type == 1   #Может возвращать список поездов на станции по типу (см. ниже): кол-во грузовых, пассажирских
+      puts "Номер(а) поездов на станции #{name} типа грузовые: "
       trains.each{|train| puts train.number if train.type == 1}
     else
-      puts "Номера поездов на станции #{name} типа пассажирские "
+      puts "Номер(а) поездов на станции #{name} типа пассажирские "
       trains.each{|train| puts train.number if train.type == 0}
     end
   end
@@ -161,10 +161,26 @@ route_minsk_brest.show_stations
 
 train1 = Train.new(1, 1, 150)
 train2 = Train.new(2, 0, 16)
+train3 = Train.new(3, 1, 100)
+train4 = Train.new(4, 0, 10)
+train5 = Train.new(5, 1, 120)
 
 train1.get_route(route_minsk_brest)
 train1.move_to(station_brest)
 train1.move_to(station_gomel)
 
+train2.get_route(route_minsk_brest)
+train2.move_to(station_gomel)
 
-station_gomel.show_trains
+station_gomel.show_trains(0)
+station_gomel.show_trains(1)
+
+train1.move_to(station_gomel)
+train1.move_to(station_brest)
+
+station_gomel.get_train(train3)
+station_gomel.get_train(train4)
+station_gomel.get_train(train5)
+
+train1.stations_info
+train2.stations_info
