@@ -47,6 +47,7 @@ class Train # Класс Train (Поезд):
     self.route = route
     move_to(route.stations.first)
     puts "У поезда #{number} следующий маршрут: #{route.stations.first.name} - #{route.stations.last.name}"
+    station.get_train(self)
   end
 
   def current_station
