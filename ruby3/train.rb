@@ -55,12 +55,12 @@ class Train # Класс Train (Поезд):
 
   def next_station
     station_index = route.stations.index(station)
-    puts "Следующая станция поезда № #{number}  - #{route.stations[station_index + 1].name}." if station_index != route.stations.size - 1
+    route.stations[station_index + 1].name if station_index != route.stations.size - 1
   end
 
   def pred_station
     station_index = route.stations.index(station)
-    puts "Предыдущая станция поезда № #{number}- #{route.stations[station_index - 1].name}." if station_index != 0
+    route.stations[station_index - 1].name if station_index != 0
   end
 
   def stations_info # Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
