@@ -25,7 +25,6 @@ class Station # Класс Station (Станция):
 
   def send_train(train) # Может отправлять поезда (по одному за раз, при этом, поезд удаляется из списка поездов, находящихся на станции).
     trains.delete(train)
-    train.station = nil
     puts "Из станции #{name} отправился #{train.number} поезд "
   end
 

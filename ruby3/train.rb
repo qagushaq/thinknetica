@@ -80,6 +80,7 @@ class Train # Класс Train (Поезд):
       puts "Поезд #{@number} уже на станции #{@station.name}"
     elsif route.stations.include?(station)
       @station.send_train(self) if @station
+      @station = nil
       @station = station
       station.get_train(self)
     else
