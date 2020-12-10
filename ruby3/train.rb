@@ -6,7 +6,7 @@ class Train # Класс Train (Поезд):
   def initialize(number, type, count_cars) # Имеет номер (произвольная строка) и тип (грузовой, пассажирский) и количество вагонов, эти данные указываются при создании экземпляра класса
     @number = number
     @type = type
-    @count_cars = count_cars
+    @count_cars = count_cars # Может возвращать количество вагонов
     @speed = 0
     puts "Создан поезд № #{number}, тип - #{type}, количество вагонов - #{count_cars}"
   end
@@ -17,10 +17,6 @@ class Train # Класс Train (Поезд):
 
   def stop # Может тормозить (сбрасывать скорость до нуля)
     self.speed = 0
-  end
-
-  def get_count_cars # Может возвращать количество вагонов
-    return count_cars
   end
 
   def attach_car # Может прицеплять/отцеплять вагоны (по одному вагону за операцию, метод просто увеличивает или уменьшает количество вагонов).
@@ -81,7 +77,6 @@ class Train # Класс Train (Поезд):
       puts "Поезд #{@number} уже на станции #{@station.name}"
     elsif route.stations.include?(station)
       @station.send_train(self) if @station
-      @station = nil
       @station = station
       station.get_train(self)
     else
