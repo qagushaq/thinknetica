@@ -35,9 +35,6 @@ loop do
     name = gets.chomp
     stations << Station.new(name)
 
-
-
-
   when 2 # Создать поезд
     puts "Введите номер поезда"
     number = gets.chomp
