@@ -17,10 +17,10 @@ class Station # Класс Station (Станция):
     puts "Из станции #{name} отправился #{train.number} поезд "
   end
 
-  def show_trains(type = nil) # Может возвращать список всех поездов на станции, находящиеся в текущий момент
-    if type  # Может возвращать список поездов на станции по типу (см. ниже): кол-во грузовых, пассажирских
-      puts "Номер(а) поездов на станции #{name} типа: #{type}: "
-      trains.each{|train| puts train.number if train.type == type}
+  def show_trains(type = nil)
+    if type
+      puts "Номер(а) поездов на станции #{name} типа #{type}: "
+      @trains.each{|train| puts train.number if train.type == type}
     else
       puts "Поезда на станции #{name}: "
       @trains.each{|train| puts train.number}
