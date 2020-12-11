@@ -1,14 +1,13 @@
 class Train # Класс Train (Поезд):
 
-  attr_accessor :speed, :number, :route, :station # Может возвращать текущую скорость
+  attr_accessor :speed, :number, :route, :station, :cars # Может возвращать текущую скорость
   attr_reader :type
 
   def initialize(number, type) # Имеет номер (произвольная строка) и тип (грузовой, пассажирский) и количество вагонов, эти данные указываются при создании экземпляра класса
     @number = number
     @type = type
-    @count_cars = count_cars # Может возвращать количество вагонов
+    @cars= []
     @speed = 0
-    puts "Создан поезд № #{number}, тип - #{type}, количество вагонов - #{count_cars}"
   end
 
   def run # Может набирать скорость
@@ -21,10 +20,10 @@ class Train # Класс Train (Поезд):
 
   def attach_car(car) # Может прицеплять/отцеплять вагоны (по одному вагону за операцию, метод просто увеличивает или уменьшает количество вагонов).
     if speed.zero? # Прицепка/отцепка вагонов может осуществляться только если поезд не движется.
-      self.count_cars += 1
+      self.cars << car
     puts "К поезду №#{number} прицепили вагон"
     else
-     puts "Поезд движется, нельзя прицеплять вагоны"
+      puts "Поезд движется, нельзя прицеплять вагоны"
     end
   end
 
@@ -42,7 +41,7 @@ class Train # Класс Train (Поезд):
   def get_route(route) # Может принимать маршрут следования (объект класса Route).При назначении маршрута поезду, поезд автоматически помещается на первую станцию в маршруте.
     self.route = route
     move_to(route.stations.first)
-    puts "У поезда #{number} следующий маршрут: #{route.stations.first.name} - #{route.stations.last.name}"
+    puts "У поезда #{number} следующий маршрут: #{route.name}"
     station.get_train(self)
   end
 
