@@ -72,7 +72,7 @@ loop do
     else
       puts "От какого поезда отцепить вагон ?"
       number = gets.chomp
-      train = trains.detect{|train| train.number == number}
+      train = trains.detect{ |train| train.number == number }
       if train.nil?
         puts "Поезда с таким номером нет"
       elsif train.cars.empty?
@@ -91,13 +91,13 @@ loop do
     else
       puts "Введите номер поезда"
       number = gets.chomp
-      train = trains.detect{|train| train.number == number}
+      train = trains.detect{ |train| train.number == number }
       if train.nil?
         puts "Поезда с таким номером нет"
       else
         puts "Введите название станции, на которую нужно переместить поезд"
         name = gets.chomp
-        station = stations.detect{|station| station.name == name}
+        station = stations.detect{ |station| station.name == name }
         if station.nil?
           puts "Такой станции нет"
         else
@@ -108,7 +108,7 @@ loop do
 
   when 6 # Просмотреть список станций
     puts "Список станций"
-    stations.each{|station| puts station.name}
+    stations.each{ |station| puts station.name }
 
   when 7 # Просмотреть список поездов на станции
       if stations.empty?
@@ -116,7 +116,7 @@ loop do
       else
         puts "Введите название станции"
         name = gets.chomp
-        station = stations.detect{|station| station.name == name}
+        station = stations.detect{ |station| station.name == name }
         if station.nil?
           puts "Такой станции нет"
         else

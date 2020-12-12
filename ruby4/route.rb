@@ -22,7 +22,7 @@ class Route # Класс Route (Маршрут):
 
   def show_stations # Может выводить список всех станций по-порядку от начальной до конечной
     puts "В маршрут #{self.name} входят станции: "
-    stations.each{|station| puts " #{station.name}" }
+    stations.each{ |station| puts " #{station.name}" }
   end
 
   def name
