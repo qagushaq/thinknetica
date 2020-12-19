@@ -11,34 +11,34 @@ trains = []
 stations = []
 CAR_TYPES = {'cargo' => CargoCar, 'passenger' => PassengerCar}
 
-puts "Что хотите сделать ?"
-puts "1. Создать станцию"
-puts "2. Создать поезд"
-puts "3. Прицепить вагон к поезду"
-puts "4. Отцепить вагон от поезда"
-puts "5. Поместить поезд на станцию"
-puts "6. Просмотреть список станций"
-puts "7. Просмотреть список поездов на станции"
-puts "0. Закончить работу"
+puts 'Что хотите сделать ?'
+puts '1. Создать станцию'
+puts '2. Создать поезд'
+puts '3. Прицепить вагон к поезду'
+puts '4. Отцепить вагон от поезда'
+puts '5. Поместить поезд на станцию'
+puts '6. Просмотреть список станций'
+puts '7. Просмотреть список поездов на станции'
+puts '0. Закончить работу'
 
 loop do
-  puts "Что хотите сделать? "
+  puts 'Что хотите сделать? '
   choose = gets.chomp.to_i
   case choose
 
   when 0 # Выход
-    puts "Выход"
+    puts 'Выход'
     break
 
   when 1 # Создать станцию
-    puts "Введите название станции"
+    puts 'Введите название станции'
     name = gets.chomp
     stations << Station.new(name)
 
   when 2 # Создать поезд
-    puts "Введите номер поезда"
+    puts 'Введите номер поезда'
     number = gets.chomp
-    puts "Выберите тип поезда: 1 - грузовой поезд, 2 - пассажирский"
+    puts 'Выберите тип поезда: 1 - грузовой поезд, 2 - пассажирский'
     type = gets.chomp.to_i
     case type
     when 1
@@ -48,18 +48,18 @@ loop do
       trains << PassengerTrain.new(number)
       puts "Создан пассажирский поезд №#{number}"
     else
-      puts "Поезд не был создан, вы неверно указали параметры"
+      puts 'Поезд не был создан, вы неверно указали параметры'
     end
 
   when 3 # Прицепить вагон к поезду
     if trains.empty?
-      puts "Создайте поезд"
+      puts 'Создайте поезд'
     else
-      puts "К какому поезду прицепить вагон ?"
+      puts 'К какому поезду прицепить вагон ?'
       number = gets.chomp
-      train = trains.detect{|train| train.number == number}
+      train = trains.detect {|train| train.number == number}
       if train.nil?
-       puts "Вы ввели номер несуществующего поезда"
+       puts 'Вы ввели номер несуществующего поезда'
      else
        train.attach_car(CAR_TYPES[train.type].new)
        puts "Теперь у поезда №#{train.number} - #{train.cars.count} вагонов"
@@ -68,15 +68,15 @@ loop do
 
   when 4 # Отцепить вагон от поезда
     if trains.empty?
-      puts "Создайте поезд"
+      puts 'Создайте поезд'
     else
-      puts "От какого поезда отцепить вагон ?"
+      puts 'От какого поезда отцепить вагон ?'
       number = gets.chomp
       train = trains.detect{ |train| train.number == number }
       if train.nil?
-        puts "Поезда с таким номером нет"
+        puts 'Поезда с таким номером нет'
       elsif train.cars.empty?
-        puts "У этого поезда нет вагонов"
+        puts 'У этого поезда нет вагонов'
       else
         train.detach_car(train.cars.last)
         puts "Теперь у поезда №#{train.number} - #{train.cars.count} вагонов"
@@ -85,21 +85,21 @@ loop do
 
   when 5 # Поместить поезд на станцию
     if trains.empty?
-      puts "Создайте поезд"
+      puts 'Создайте поезд'
     elsif stations.empty?
-      puts "Сначала необходимо создать станцию"
+      puts 'Сначала необходимо создать станцию'
     else
-      puts "Введите номер поезда"
+      puts 'Введите номер поезда'
       number = gets.chomp
-      train = trains.detect{ |train| train.number == number }
+      train = trains.detect { |train| train.number == number }
       if train.nil?
-        puts "Поезда с таким номером нет"
+        puts 'Поезда с таким номером нет'
       else
-        puts "Введите название станции, на которую нужно переместить поезд"
+        puts 'Введите название станции, на которую нужно переместить поезд'
         name = gets.chomp
-        station = stations.detect{ |station| station.name == name }
+        station = stations.detect { |station| station.name == name }
         if station.nil?
-          puts "Такой станции нет"
+          puts 'Такой станции нет'
         else
           station.get_train(train)
         end
@@ -107,23 +107,23 @@ loop do
     end
 
   when 6 # Просмотреть список станций
-    puts "Список станций"
-    stations.each{ |station| puts station.name }
+    puts 'Список станций'
+    stations.each { |station| puts station.name }
 
   when 7 # Просмотреть список поездов на станции
       if stations.empty?
-        puts "Сначала необходимо создать станцию"
+        puts 'Сначала необходимо создать станцию'
       else
-        puts "Введите название станции"
+        puts 'Введите название станции'
         name = gets.chomp
         station = stations.detect{ |station| station.name == name }
         if station.nil?
-          puts "Такой станции нет"
+          puts 'Такой станции нет'
         else
           station.show_trains
         end
       end
     else
-      puts "Выбирайте из предложенных вариантов !!!"
+      puts 'Выбирайте из предложенных вариантов !!!'
     end
   end

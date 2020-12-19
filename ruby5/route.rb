@@ -4,7 +4,7 @@ class Route
 
   attr_accessor :stations
 
-  def initialize (from, to)
+  def initialize(from, to)
     @stations = [from, to]
     register_instance
   end
@@ -16,7 +16,7 @@ class Route
 
   def delete_station(station)
     if [stations.first, stations.last].include?(station)
-      puts "Начальную и конечую станцию нельзя удалить"
+      puts 'Начальную и конечую станцию нельзя удалить'
     else
       stations.delete(station)
       puts "Из маршрута #{self.name} удалена станция #{station.name}"
@@ -25,11 +25,11 @@ class Route
 
   def show_stations
     puts "В маршрут #{self.name} входят станции: "
-    stations.each{ |station| puts " #{station.name}" }
+    stations.each { |station| puts " #{station.name}" }
   end
 
   def name
-    stations.first.name + " - " + stations.last.name
+    stations.first.name + ' - ' + stations.last.name
   end
 
 end

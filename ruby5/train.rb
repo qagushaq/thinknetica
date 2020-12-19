@@ -1,5 +1,5 @@
 class Train
-  
+
   include ManufacturingCompany
   include InstanceCounter
 
@@ -35,18 +35,18 @@ class Train
       self.cars << car
     puts "К поезду №#{number} прицепили вагон"
     else
-      puts "Поезд движется, нельзя прицеплять вагоны"
+      puts 'Поезд движется, нельзя прицеплять вагоны'
     end
   end
 
   def detach_car(car)
     if !cars.include?(car)
-    puts "Нечего отцеплять"
+    puts 'Нечего отцеплять'
     elsif speed.zero?
       self.cars.delete(car)
       puts "От поезда №#{number} отцепили вагон"
     else
-      puts "Поезд движется, нельзя отцеплять вагоны"
+      puts 'Поезд движется, нельзя отцеплять вагоны'
     end
   end
 
@@ -73,7 +73,7 @@ class Train
 
   def stations_info
     if route.nil?
-      puts "Маршрут не задан"
+      puts 'Маршрут не задан'
     else
       current_station
       next_station
@@ -83,7 +83,7 @@ class Train
 
   def move_to(station)
     if route.nil?
-    puts "Нужно задать маршрут."
+    puts 'Нужно задать маршрут.'
     elsif @station == station
       puts "Поезд #{@number} уже на станции #{@station.name}"
     elsif route.stations.include?(station)

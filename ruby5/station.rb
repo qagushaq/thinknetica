@@ -30,10 +30,10 @@ class Station
   def show_trains(type = nil)
     if type
       puts "Номер(а) поездов на станции #{name} типа #{type}: "
-      @trains.each{ |train| puts train.number if train.type == type }
+      @trains.each { |train| puts train.number if train.type == type }
     else
       puts "Поезда на станции #{name}: "
-      @trains.each{ |train| puts train.number }
+      @trains.each { |train| puts train.number }
     end
   end
 

@@ -8,7 +8,7 @@ class PassengerTrain < Train
     if car.instance_of?(PassengerCar)
       super(car)
     else
-      puts "К пассажирскому поезду можно прицеплять только пассажирские вагоны"
+      puts 'К пассажирскому поезду можно прицеплять только пассажирские вагоны'
     end
   end
 
