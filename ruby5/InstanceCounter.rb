@@ -13,9 +13,7 @@ module InstanceCounter
     private
 
     def register_instance
-      if @instances = nil || @instances == false
-        @instances = 0
-      end
+      @instances ||= 0
       @instances += 1
     end
 
@@ -24,7 +22,7 @@ module InstanceCounter
   module InstanceMethods
 
     protected
-    
+
     def register_instance
       self.class.send(:register_instance)
     end
