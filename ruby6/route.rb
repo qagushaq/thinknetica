@@ -15,12 +15,11 @@ class Route
   end
 
   def delete_station(station)
-    if [stations.first, stations.last].include?(station)
-      puts 'Начальную и конечую станцию нельзя удалить'
-    else
-      stations.delete(station)
-      puts "Из маршрута #{self.name} удалена станция #{station.name}"
-    end
+    raise 'Начальную и конечую станцию маршрута нельзя удалить' if [stations.first, stations.last].include?(station)
+    stations.delete(station)
+    puts "Из маршрута #{self.name} удалена станция #{station.name}"
+    rescue RuntimeError => e
+      puts "Ошибка: #{e.message}"
   end
 
   def show_stations

@@ -1,6 +1,7 @@
 class Station
 
   include InstanceCounter
+  include Validate
 
   @@stations = []
 
@@ -8,8 +9,9 @@ class Station
 
   def initialize(name)
     @name = name
-    @@stations << self
     @trains = []
+    validate!
+    @@stations << self
     register_instance
   end
 
@@ -35,6 +37,13 @@ class Station
       puts "Поезда на станции #{name}: "
       @trains.each { |train| puts train.number }
     end
+  end
+
+
+protected
+
+  def validate!
+    raise "Вы не задали название станции, попробуйте еще раз!" if name.empty?
   end
 
 end

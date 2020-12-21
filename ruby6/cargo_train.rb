@@ -1,15 +1,14 @@
 class CargoTrain < Train
 
-  def initialize(number, type = 'cargo')
-    super
+  def initialize(number)
+    super(number, type = 'cargo')
   end
 
   def attach_car(car)
-    if car.instance_of?(CargoCar)
+    raise 'К грузовому поезду можно прицеплять только грузовые вагоны' unless car.instance_of?(CargoCar)
       super(car)
-    else
-      puts 'К грузовому поезду можно прицеплять только грузовые вагоны'
-    end
+    rescue RuntimeError => e
+      puts "Ошибка: #{e.message}"
   end
 
 end

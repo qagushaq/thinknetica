@@ -1,15 +1,14 @@
 class PassengerTrain < Train
 
-  def initialize(number, type = "passenger")
-    super
+  def initialize(number)
+    super(number, "passenger")
   end
 
   def attach_car(car)
-    if car.instance_of?(PassengerCar)
+    raise 'К пассажирскому поезду можно прицеплять только пассажирские вагоны' unless car.instance_of?(PassengerCar)
       super(car)
-    else
-      puts 'К пассажирскому поезду можно прицеплять только пассажирские вагоны'
-    end
+    rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
   end
 
 end

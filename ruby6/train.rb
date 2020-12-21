@@ -2,17 +2,21 @@ class Train
 
   include ManufacturingCompany
   include InstanceCounter
+  include Validate
 
   attr_accessor :speed, :number, :route, :station, :cars
   attr_reader :type
 
   @@trains = {}
 
+  NUMBER_FORMAT = /^[a-z0-9]{3}-?[a-z0-9]{2}$/i
+
   def initialize(number, type)
     @number = number
     @type = type
     @cars = []
     @speed = 0
+    validate!
     @@trains[number] = self
     register_instance
   end
@@ -20,7 +24,6 @@ class Train
   def self.find(number)
     @@trains[number]
   end
-
 
   def run(speed)
     self.speed += speed
@@ -31,24 +34,21 @@ class Train
   end
 
   def attach_car(car)
-    if speed.zero?
-      self.cars << car
+    raise 'Поезд движется, нельзя прицеплять вагоны' unless speed.zero?
+    self.cars << car
     puts "К поезду №#{number} прицепили вагон"
-    else
-      puts 'Поезд движется, нельзя прицеплять вагоны'
-    end
+    rescue RuntimeError => e
+      puts "Ошибка: #{e.message}"
   end
 
   def detach_car(car)
-    if !cars.include?(car)
-    puts 'Нечего отцеплять'
-    elsif speed.zero?
+    raise 'Нечего отцеплять' if !cars.include?(car)
+    raise 'Поезд движется, нельзя прицеплять вагоны' unless speed.zero?
       self.cars.delete(car)
       puts "От поезда №#{number} отцепили вагон"
-    else
-      puts 'Поезд движется, нельзя отцеплять вагоны'
+    rescue RuntimeError => e
+      puts "Ошибка: #{e.message}"
     end
-  end
 
   def get_route(route)
     self.route = route
@@ -72,27 +72,28 @@ class Train
   end
 
   def stations_info
-    if route.nil?
-      puts 'Маршрут не задан'
-    else
+    raise "Маршрут не задан" if route.nil?
       current_station
       next_station
       pred_station
-    end
+    rescue RuntimeError => e
+      puts "Ошибка: #{e.message}"
   end
 
   def move_to(station)
-    if route.nil?
-    puts 'Нужно задать маршрут.'
-    elsif @station == station
-      puts "Поезд #{@number} уже на станции #{@station.name}"
-    elsif route.stations.include?(station)
+    raise 'Нужно задать маршрут.' if route.nil?
+    raise "Поезд #{@number} уже на станции #{@station.name}" if @station == station
+    raise "#{station.name} не входит в маршрут поезда №#{number}" unless route.stations.include?(station)
       @station.send_train(self) if @station
       @station = station
       station.get_train(self)
-    else
-      puts "#{station.name} не входит в маршрут поезда №#{number}"
-    end
+    rescue RuntimeError => e
+      puts "Ошибка: #{e.message}"
+  end
+
+  private
+  def validate!
+    raise "Номер поезда не соответствует шаблону (ххххх или ххх-хх)" if number !~ NUMBER_FORMAT
   end
 
 end
