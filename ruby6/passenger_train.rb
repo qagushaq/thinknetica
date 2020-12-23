@@ -7,7 +7,7 @@ class PassengerTrain < Train
   def attach_car(car)
     raise 'К пассажирскому поезду можно прицеплять только пассажирские вагоны' unless car.instance_of?(PassengerCar)
       super(car)
-    rescue RuntimeError => e
+  rescue RuntimeError => e
     puts "Ошибка: #{e.message}"
   end
 

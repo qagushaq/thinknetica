@@ -37,8 +37,8 @@ class Train
     raise 'Поезд движется, нельзя прицеплять вагоны' unless speed.zero?
     self.cars << car
     puts "К поезду №#{number} прицепили вагон"
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
   end
 
   def detach_car(car)
@@ -46,9 +46,9 @@ class Train
     raise 'Поезд движется, нельзя прицеплять вагоны' unless speed.zero?
       self.cars.delete(car)
       puts "От поезда №#{number} отцепили вагон"
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
-    end
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
+  end
 
   def get_route(route)
     self.route = route
@@ -76,8 +76,8 @@ class Train
       current_station
       next_station
       pred_station
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
   end
 
   def move_to(station)
@@ -87,13 +87,14 @@ class Train
       @station.send_train(self) if @station
       @station = station
       station.get_train(self)
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
   end
 
   private
+
   def validate!
-    raise "Номер поезда не соответствует шаблону (ххххх или ххх-хх)" if number !~ NUMBER_FORMAT
+    raise 'Номер поезда не соответствует шаблону (ххххх или ххх-хх)' if number !~ NUMBER_FORMAT
   end
 
 end

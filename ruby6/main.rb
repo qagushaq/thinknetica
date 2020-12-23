@@ -38,7 +38,7 @@ def create_train # Создать поезд
     CargoTrain.new(number)
     puts "Создан грузовой поезд №#{number}"
   end
-  rescue RuntimeError => e
+rescue RuntimeError => e
   puts "Ошибка: #{e.message}"
   retry
 end
@@ -51,7 +51,7 @@ def attach_car # Прицепить вагон к поезду
   raise 'Вы ввели номер несуществующего поезда' if train.nil?
   train.attach_car(CAR_TYPES[train.type].new)
   puts "Теперь у поезда №#{train.number} - #{train.cars.count} вагонов"
-  rescue RuntimeError => e
+rescue RuntimeError => e
   puts "Ошибка: #{e.message}"
   retry unless Train.all.empty?
 end
@@ -65,7 +65,7 @@ def detach_car # Отцепить вагон от поезда
   raise 'У этого поезда нет вагонов' if train.cars.empty?
   train.detach_car(train.cars.last)
   puts "Теперь у поезда №#{train.number} - #{train.cars.count} вагонов"
-  rescue RuntimeError => e
+rescue RuntimeError => e
   puts "Ошибка: #{e.message}"
   retry unless Train.all.empty?
 end
@@ -82,15 +82,15 @@ def move_to_station # Поместить поезд на станцию
   station = Stations.all.detect { |station| station.name == name }
   raise 'Такой станции нет' if station.nil?
   station.get_train(train)
-  rescue RuntimeError => e
-    puts "Ошибка: #{e.message}"
+rescue RuntimeError => e
+  puts "Ошибка: #{e.message}"
 end
 
 def station_onfo # Просмотреть список станций
   raise "Вы еще не создали станции !" if Station.instances.nil?
   puts 'Список станций:'
-  Station.all.each{|station| puts station.name}
-  rescue RuntimeError => e
+  Station.all.each {|station| puts station.name}
+rescue RuntimeError => e
   puts "Ошибка: #{e.message}"
 end
 
@@ -98,10 +98,10 @@ def train_info # Просмотреть список поездов на ста�
   raise 'Сначала необходимо создать станцию' if Station.all.empty?
   puts 'Введите название станции'
   name = gets.chomp
-  station = Station.all.detect{|station| station.name == name}
+  station = Station.all.detect {|station| station.name == name}
   raise 'Такой станции нет' if station.nil?
   station.show_trains
-  rescue RuntimeError => e
+rescue RuntimeError => e
   puts "Ошибка: #{e.message}"
 end
 
@@ -143,8 +143,8 @@ loop do
     station_onfo
 
   when 7 # Просмотреть список поездов на станции
-     train_info
+    train_info
    else
-     puts 'Выбирайте из предложенных вариантов !!!'
-   end
+    puts 'Выбирайте из предложенных вариантов !!!'
+  end
 end
