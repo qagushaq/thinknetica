@@ -1,7 +1,7 @@
 class CargoTrain < Train
 
   def initialize(number)
-    super(number, type = 'cargo')
+    super(number, "cargo")
   end
 
   def attach_car(car)

@@ -15,6 +15,11 @@ class Station
     register_instance
   end
 
+  def iterate_trains(&block)
+    raise "На станции нет поездов" if @trains.empty?
+    @trains.each { |train| block.call(train) }
+  end
+
   def self.all
     @@stations
   end
@@ -28,17 +33,6 @@ class Station
     @trains.delete(train)
     puts "Из станции #{name} отправился #{train.number} поезд "
   end
-
-  def show_trains(type = nil)
-    if type
-      puts "Номер(а) поездов на станции #{name} типа #{type}: "
-      @trains.each { |train| puts train.number if train.type == type }
-    else
-      puts "Поезда на станции #{name}: "
-      @trains.each { |train| puts train.number }
-    end
-  end
-
 
 protected
 

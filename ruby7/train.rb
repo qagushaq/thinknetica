@@ -21,6 +21,11 @@ class Train
     register_instance
   end
 
+  def iterate_cars(&block)
+    raise "У поезда нет вагонов" if @cars.empty?
+    @cars.each { |cars| block.call(car) }
+  end
+
   def self.find(number)
     @@trains[number]
   end

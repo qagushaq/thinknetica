@@ -49,7 +49,14 @@ def attach_car # Прицепить вагон к поезду
   number = gets.chomp
   train = Train.find(number)
   raise 'Вы ввели номер несуществующего поезда' if train.nil?
-  train.attach_car(CAR_TYPES[train.type].new)
+  if train.type == "cargo"
+    puts "Введите объем вагона"
+    size = gets.chomp.to_f
+  elsif train.type == "passenger"
+    puts "Введите количество мест в вагоне"
+    size = gets.chomp.to_i
+  end
+  train.attach_car(CAR_TYPES[train.type].new(size))
   puts "Теперь у поезда №#{train.number} - #{train.cars.count} вагонов"
 rescue RuntimeError => e
   puts "Ошибка: #{e.message}"
@@ -57,7 +64,7 @@ rescue RuntimeError => e
 end
 
 def detach_car # Отцепить вагон от поезда
-  raise 'Создайте поезд' if Train.all.empty?
+  raise 'Создайте поезд!' if Train.all.empty?
   puts 'От какого поезда отцепить вагон ?'
   number = gets.chomp
   train = Train.find(number)
@@ -86,7 +93,7 @@ rescue RuntimeError => e
   puts "Ошибка: #{e.message}"
 end
 
-def station_onfo # Просмотреть список станций
+def station_info # Просмотреть список станций
   raise "Вы еще не создали станции !" if Station.instances.nil?
   puts 'Список станций:'
   Station.all.each {|station| puts station.name}
@@ -100,7 +107,40 @@ def train_info # Просмотреть список поездов на ста�
   name = gets.chomp
   station = Station.all.detect {|station| station.name == name}
   raise 'Такой станции нет' if station.nil?
-  station.show_trains
+  station.iterate_trains { |train| puts "Номер поезда: №#{train.number}, Тип:#{train.type}, #{train.cars.count}-вагонов "}
+rescue RuntimeError => e
+  puts "Ошибка: #{e.message}"
+end
+
+def car_info # Просмотреть список вагонов у поезда
+  raise 'Создайте поезд' if Train.all.empty?
+  puts 'Введите норме поезда ?'
+  number = gets.chomp
+  train = Train.find(number)
+  raise 'Вы ввели номер несуществующего поезда' if train.nil?
+  raise 'Сначала необходимо присоединить вагоны к поезду' if Car.all.empty?
+  car_number = 0
+  train.iterate_cars { |car| puts "№#{car_number += 1}, Тип:#{train.type}, свободно-#{car.free}, занято-#{car.filled}" }
+rescue RuntimeError => e
+  puts "Ошибка: #{e.message}"
+end
+
+def load_car # Загрузить вагон
+  raise "Создайте поезд!" if Train.all.empty?
+  puts "Введите номер поезда"
+  number = gets.chomp
+  train = Train.find(number)
+  raise 'Вы ввели номер несуществующего поезда' if train.nil?
+  puts "Введите номер вагона"
+  car_number = gets.chomp.to_i
+  raise "Такого вагона в поезде нет" if car_number > train.cars.size
+  if train.type == "cargo"
+    puts "Введите объем груза"
+    train.cars[car_number-1].load(gets.chomp.to_f)
+  elsif train.type == "passenger"
+    train.cars[car_number-1].take_seat
+  end
+  puts "Вагон(ы) успешно заполнены"
 rescue RuntimeError => e
   puts "Ошибка: #{e.message}"
 end
@@ -113,6 +153,8 @@ puts '4. Отцепить вагон от поезда'
 puts '5. Поместить поезд на станцию'
 puts '6. Просмотреть список станций'
 puts '7. Просмотреть список поездов на станции'
+puts '8. Просмотреть список вагонов у поезда'
+puts '9. Заполнить вагоны в поезде'
 puts '0. Закончить работу'
 
 loop do
@@ -144,6 +186,13 @@ loop do
 
   when 7 # Просмотреть список поездов на станции
     train_info
+
+  when 8 # Просмотреть список вагонов у поезда
+    car_info
+
+  when 9 #Загрузить вагон
+    load_car
+
    else
     puts 'Выбирайте из предложенных вариантов !!!'
   end
