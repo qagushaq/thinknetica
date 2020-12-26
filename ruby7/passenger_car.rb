@@ -9,7 +9,7 @@ class PassengerCar < Car
 
   def take_seat
     raise "Все места заняты." if  @filled > @count_seats
-    @filled += count_seats
+    @filled += 1
   end
 
   def occupied

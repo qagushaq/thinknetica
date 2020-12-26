@@ -17,7 +17,7 @@ class Station
 
   def iterate_trains(&block)
     raise "На станции нет поездов" if @trains.empty?
-    @trains.each { |train| block.call(train) }
+    @trains.each { |train| yield(train) }
   end
 
   def self.all

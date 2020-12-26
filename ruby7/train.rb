@@ -23,11 +23,15 @@ class Train
 
   def iterate_cars(&block)
     raise "У поезда нет вагонов" if @cars.empty?
-    @cars.each { |cars| block.call(car) }
+    @cars.each { |cars| yield(car) }
   end
 
   def self.find(number)
     @@trains[number]
+  end
+
+  def self.all
+    @@trains
   end
 
   def run(speed)

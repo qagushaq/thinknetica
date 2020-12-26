@@ -6,5 +6,5 @@ class Car
   def initialize
     register_instance
   end
-  
+
 end

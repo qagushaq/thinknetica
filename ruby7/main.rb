@@ -23,7 +23,7 @@ rescue RuntimeError => e
 end
 
 def create_train # Создать поезд
-  puts 'Введите номер поезда'
+  puts 'Введите номер поезда в формате (ххххх или ххх-хх)'
   number = gets.chomp
   raise "Поезд №#{number} уже существует" unless Train.find(number).nil?
   puts 'Выберите тип поезда: 1 - пассажирский, 2 - грузовой'
@@ -78,15 +78,15 @@ rescue RuntimeError => e
 end
 
 def move_to_station # Поместить поезд на станцию
-  raise 'Создайте поезд' if Trains.all.empty?
-  raise 'Сначала необходимо создать станцию' if Stations.all.empty?
+  raise 'Создайте поезд' if Train.all.empty?
+  raise 'Сначала необходимо создать станцию' if Station.all.empty?
   puts 'Введите номер поезда'
   number = gets.chomp
   train = Train.find(number)
   raise 'Поезда с таким номером нет' if train.nil?
   puts 'Введите название станции, на которую нужно переместить поезд'
   name = gets.chomp
-  station = Stations.all.detect { |station| station.name == name }
+  station = Station.all.detect { |station| station.name == name }
   raise 'Такой станции нет' if station.nil?
   station.get_train(train)
 rescue RuntimeError => e
@@ -114,11 +114,10 @@ end
 
 def car_info # Просмотреть список вагонов у поезда
   raise 'Создайте поезд' if Train.all.empty?
-  puts 'Введите норме поезда ?'
+  puts 'Введите номер поезда.'
   number = gets.chomp
   train = Train.find(number)
   raise 'Вы ввели номер несуществующего поезда' if train.nil?
-  raise 'Сначала необходимо присоединить вагоны к поезду' if Car.all.empty?
   car_number = 0
   train.iterate_cars { |car| puts "№#{car_number += 1}, Тип:#{train.type}, свободно-#{car.free}, занято-#{car.filled}" }
 rescue RuntimeError => e
@@ -136,9 +135,9 @@ def load_car # Загрузить вагон
   raise "Такого вагона в поезде нет" if car_number > train.cars.size
   if train.type == "cargo"
     puts "Введите объем груза"
-    train.cars[car_number-1].load(gets.chomp.to_f)
+    train.cars[car_number - 1].load(gets.chomp.to_f)
   elsif train.type == "passenger"
-    train.cars[car_number-1].take_seat
+    train.cars[car_number - 1].take_seat
   end
   puts "Вагон(ы) успешно заполнены"
 rescue RuntimeError => e

@@ -8,7 +8,7 @@ class CargoCar < Car
    end
 
    def load(volume)
-     raise "Нет места" if   volume + @filled > @volume
+     raise "Нет места" if volume + @filled > @volume
      @filled += volume
    end
 
