@@ -1,5 +1,4 @@
 class Station
-
   include InstanceCounter
   include Validate
 
@@ -15,13 +14,14 @@ class Station
     register_instance
   end
 
-  def iterate_trains(&block)
-    raise "На станции нет поездов" if @trains.empty?
-    @trains.each { |train| yield(train) }
-  end
-
   def self.all
     @@stations
+  end
+
+  def iterate_trains
+    raise 'На станции нет поездов' if @trains.empty?
+
+    @trains.each { |train| yield(train) }
   end
 
   def get_train(train)
@@ -34,10 +34,9 @@ class Station
     puts "Из станции #{name} отправился #{train.number} поезд "
   end
 
-protected
+  protected
 
   def validate!
-    raise "Вы не задали название станции, попробуйте еще раз!" if name.empty?
+    raise 'Вы не задали название станции, попробуйте еще раз!' if name.empty?
   end
-
 end

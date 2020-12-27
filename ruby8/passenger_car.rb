@@ -1,5 +1,4 @@
 class PassengerCar < Car
-
   attr_reader :filled
 
   def initialize(count_seats)
@@ -8,7 +7,8 @@ class PassengerCar < Car
   end
 
   def take_seat
-    raise "Все места заняты." if  @filled > @count_seats
+    raise 'Все места заняты.' if @filled > @count_seats
+
     @filled += 1
   end
 
@@ -19,5 +19,4 @@ class PassengerCar < Car
   def free
     @count_seats - @filled
   end
-
 end
