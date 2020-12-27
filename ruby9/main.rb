@@ -1,4 +1,5 @@
-require_relative 'validate'
+require_relative 'accessors'
+require_relative 'validation'
 require_relative 'instance_counter'
 require_relative 'manufacturing_company'
 require_relative 'station'
@@ -199,7 +200,7 @@ loop do
     move_to_station
 
   when 6 # Просмотреть список станций
-    station_onfo
+    station_info
 
   when 7 # Просмотреть список поездов на станции
     train_info

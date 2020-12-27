@@ -1,7 +1,7 @@
 class Train
   include ManufacturingCompany
   include InstanceCounter
-  include Validate
+  include Validation
 
   attr_accessor :speed, :number, :route, :station, :cars
   attr_reader :type

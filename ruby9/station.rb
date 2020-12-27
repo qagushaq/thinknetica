@@ -1,6 +1,6 @@
 class Station
   include InstanceCounter
-  include Validate
+  include Validation
 
   @@stations = []
 
