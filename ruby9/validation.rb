@@ -7,16 +7,15 @@ module Validation
   module ClassMethods
     attr_accessor :checks
 
-    def validate(*args)
-      args ||= []
-      self.checks ||= []
-      self.checks << args
+    def validate(type, arg, option = nil)
+      @checks ||= []
+      @checks.push(type: type, arg: arg, option: option)
     end
   end
 
   module InstanceMethods
     def validate!
-      self.class.checks.each { |val| self.send val[1].to_sym, instance_variable_get("@#{val[0]}".to_sym), val[2] }
+      self.class.checks.each { |validate| self.send validate[:type].to_sym, instance_variable_get("@#{validate[:arg]}".to_sym), validate[:option] }
     end
 
     def valid?
@@ -28,15 +27,15 @@ module Validation
 
     private
 
-    def presence(value, _options)
+    def validate_presence(value, _options)
       raise 'Значение не может быть пустым' if value.empty?
     end
 
-    def format(value, options)
+    def validate_format(value, options)
       raise 'Неверный формат' if value !~ options
     end
 
-    def type(value, options)
+    def validate_type(value, options)
       raise 'Несоответствие класса' if value.class == options
     end
   end
