@@ -1,6 +1,6 @@
 class PassengerTrain < Train
-  validate :number, :validate_presence
-  validate :number, :validate_format, NUMBER_FORMAT
+  validate :number, :presence
+  validate :number, :format, NUMBER_FORMAT
   def initialize(number)
     super(number, 'passenger')
   end

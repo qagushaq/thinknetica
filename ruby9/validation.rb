@@ -15,7 +15,7 @@ module Validation
 
   module InstanceMethods
     def validate!
-      self.class.checks.each { |validate| self.send validate[:type].to_sym, instance_variable_get("@#{validate[:arg]}".to_sym), validate[:option] }
+      self.class.checks.each { |validate| self.send "validate_#{validate[:type].to_sym}", instance_variable_get("@#{validate[:arg]}".to_sym), validate[:option] }
     end
 
     def valid?
@@ -27,15 +27,15 @@ module Validation
 
     private
 
-    def validate_presence(value, _options)
+    def presence(value, _options)
       raise 'Значение не может быть пустым' if value.empty?
     end
 
-    def validate_format(value, options)
+    def format(value, options)
       raise 'Неверный формат' if value !~ options
     end
 
-    def validate_type(value, options)
+    def type(value, options)
       raise 'Несоответствие класса' if value.class == options
     end
   end
